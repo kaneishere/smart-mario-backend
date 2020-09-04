@@ -6,7 +6,7 @@ const app = express()
 app.use(express.json()) // Set Header "Content-Type" = "applications/json"
 
 let count = 1
-console.log("Server Starting")
+// console.log("Server Starting")
 
 app.get("/", function (req, res) {
     dbHandler.add_actor("NewActor"+count)
