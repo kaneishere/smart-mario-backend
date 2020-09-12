@@ -1,5 +1,4 @@
-import DBHandler from "./db_handler.js"
-const dbHandler = new DBHandler()
+import {db_connection} from "./Database/reset_models.js"
 
 import express from "express"
 const app = express()
@@ -9,8 +8,8 @@ let count = 1
 // console.log("Server Starting")
 
 app.get("/", function (req, res) {
-    dbHandler.add_actor("NewActor"+count)
-    dbHandler.display_table("actor")
+
+    // db_connection.find 
     res.send('Display Table ' + count++)
 })
 
@@ -21,11 +20,9 @@ app.post("/", function (req, res) {
     {
         for (let actor of req.body.actors)
         {
-            dbHandler.add_actor(actor)
+             // db_connection.create 
         }
     }
-    
-    dbHandler.display_table("actor")
     res.send('Post Request Successful! ' + count++);
 })
 
