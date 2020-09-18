@@ -18,5 +18,10 @@ db.Sequelize = Sequelize
 db.sequelize = sequelize
 
 db.Student = require("./Student.models.js")(sequelize, Sequelize)
+db.Teacher = require("./Teacher.models.js")(sequelize, Sequelize)
+db.Challenge = require("./Challenge.models.js")(sequelize, Sequelize)
+
+db.Teacher.hasMany(db.Student)
+db.Challenge.hasMany(db.Student)
 
 module.exports = db
