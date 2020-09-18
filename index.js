@@ -1,8 +1,8 @@
-import {db_connection} from "./Database/reset_models.js"
-
-import express from "express"
+const express = require("express")
 const app = express()
 app.use(express.json()) // Set Header "Content-Type" = "applications/json"
+
+const db = require("./models/index.js")
 
 let count = 1
 // console.log("Server Starting")
