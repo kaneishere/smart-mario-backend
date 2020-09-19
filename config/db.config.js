@@ -1,7 +1,7 @@
 module.exports = {
     host: 'localhost',
     user : 'root',
-    password : 'Adithya@29',
+    password : 'password',
     db: 'EXPRESS_1',
     dialect: 'mysql',
     pool: {
@@ -17,7 +17,7 @@ module.exports = {
 //     dialect: 'mysql'
 // });
 
-// const sequelize = new Sequelize('EXPRESS_1', 'root', 'Adithya@29', {
+// const sequelize = new Sequelize('EXPRESS_1', 'root', 'password', {
 //     host: 'localhost',
 //     dialect: 'mysql'
 // });

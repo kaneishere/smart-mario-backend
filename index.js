@@ -2,35 +2,25 @@
 
 const express = require("express")
 const app = express()
-app.use(express.json()) // Set Header "Content-Type" = "applications/json"
-app.use(express.urlencoded({extended : true}))
+const bodyParser = require("body-parser")
+app.use(bodyParser.json()) 
 
-const cors = require("cors");
-let corsOptions = {origin: "http://example:3000"}
-app.use(cors(corsOptions));
+// Set Header Content-Type = application/json (no quotes)
 
 const db = require("./models/index.js")
 db.sequelize.sync({force: true}).then(() => {
     console.log("DB Synced")
 })
 
+// Test call
 let count = 1
-
 app.get("/", function (req, res) {
     res.send('API Call: ' + count++)
 })
 
-app.post("/", function (req, res) {
-    console.log(req.body)
+require("./routes/Student.routes")(app);
 
-    if (req.body.action == "add")
-    {
-        for (let actor of req.body.actors)
-        {
-             // db_connection.create 
-        }
-    }
-    res.send('Post Request Successful! ' + count++);
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => {
+    console.log("Server running on port " + PORT)
 })
-
-app.listen(3000);

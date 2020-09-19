@@ -21,7 +21,10 @@ db.Student = require("./Student.models.js")(sequelize, Sequelize)
 db.Teacher = require("./Teacher.models.js")(sequelize, Sequelize)
 db.Challenge = require("./Challenge.models.js")(sequelize, Sequelize)
 
-db.Teacher.hasMany(db.Student)
-db.Challenge.hasMany(db.Student)
+// User.belongsTo(Company, {foreignKey: 'fk_companyname', targetKey: 'name'}); // Adds fk_companyname to User
+
+db.Student.belongsTo(db.Teacher, {foreignKey: 'fk_teacher_key', sourceKey: 'key'})
+db.Student.belongsToMany(db.Challenge, { through: 'Student_Challenge' })
+db.Challenge.belongsToMany(db.Student, { through: 'Student_Challenge' })
 
 module.exports = db
