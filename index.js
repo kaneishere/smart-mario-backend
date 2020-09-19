@@ -3,8 +3,11 @@
 const express = require("express")
 const app = express()
 app.use(express.json()) // Set Header "Content-Type" = "applications/json"
+app.use(express.urlencoded({extended : true}))
 
-
+const cors = require("cors");
+let corsOptions = {origin: "http://example:3000"}
+app.use(cors(corsOptions));
 
 const db = require("./models/index.js")
 db.sequelize.sync({force: true}).then(() => {
@@ -12,12 +15,9 @@ db.sequelize.sync({force: true}).then(() => {
 })
 
 let count = 1
-// console.log("Server Starting")
 
 app.get("/", function (req, res) {
-
-    // db_connection.find 
-    res.send('Display Table ' + count++)
+    res.send('API Call: ' + count++)
 })
 
 app.post("/", function (req, res) {
