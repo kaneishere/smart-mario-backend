@@ -1,6 +1,10 @@
+// https://bezkoder.com/node-js-express-sequelize-mysql/
+
 const express = require("express")
 const app = express()
 app.use(express.json()) // Set Header "Content-Type" = "applications/json"
+
+
 
 const db = require("./models/index.js")
 db.sequelize.sync({force: true}).then(() => {
