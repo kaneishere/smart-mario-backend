@@ -8,7 +8,7 @@ app.use(bodyParser.json())
 // Set Header Content-Type = application/json (no quotes)
 
 const db = require("./models/index.js")
-db.sequelize.sync({force: true}).then(() => {
+db.sequelize.sync({force: false}).then(() => {
     console.log("DB Synced")
 })
 
@@ -18,7 +18,8 @@ app.get("/", function (req, res) {
     res.send('API Call: ' + count++)
 })
 
-require("./routes/Student.routes")(app);
+require("./routes/Student.routes")(app)
+require("./routes/Teacher.routes")(app);
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {

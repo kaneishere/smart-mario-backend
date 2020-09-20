@@ -4,9 +4,8 @@ module.exports = app => {
     var router = require("express").Router()
 
     router.get("/", student_fns.findAll)
-
-    router.post("/", student_fns.createAcc)
-    router.post("/search", student_fns.authenticate)
+    router.post("/", student_fns.createStudent)
+    router.post("/authenticate", student_fns.authenticate)
 
     app.use("/api/students", router)
 }

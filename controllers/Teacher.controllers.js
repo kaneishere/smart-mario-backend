@@ -1,10 +1,8 @@
 const db = require("../models")
-const Student = db.Student
 const Teacher = db.Teacher
-const Op = db.Sequelize.Op
 
 function isUniqueUsername (username) {
-    return Student.count({ where: { username: username } })
+    return Teacher.count({ where: { username: username } })
       .then(count => {
         if (count != 0) {
           return false;
@@ -13,18 +11,7 @@ function isUniqueUsername (username) {
     });
 }
 
-function has_teacher(fk_teacher_key){
-    return Teacher.count({ where: { teacher_key: fk_teacher_key } })
-      .then(count => {
-        if (count != 0) {
-          return true
-        }
-        return false
-    })
-}
-
-exports.createStudent = async (req, res) => {
-
+exports.createTeacher = async (req, res) => {
     if (!req.body.username)
     {
         res.status(400).send({
@@ -42,7 +29,7 @@ exports.createStudent = async (req, res) => {
     else if (!req.body.teacher_key)
     {
         res.status(400).send({
-            message: "Error. Teacher Key Empty"
+            message: "Error. School Key Empty"
         })
         return
     }
@@ -56,37 +43,27 @@ exports.createStudent = async (req, res) => {
         return
     }
 
-    hasTeacher = await has_teacher(req.body.teacher_key)
-    if (!hasTeacher)
-    {
-        res.status(400).send({
-            message: "Error. Invalid Teacher Key"
-        })
-        return
-    }
-
-    // Create a student object
-    const student = {
+    const teacher = {
         username : req.body.username,
         password : req.body.password,
-        fk_teacher_key : req.body.teacher_key
+        teacher_key : req.body.teacher_key
     }
 
-    // Add student object to Student table
-    Student.create(student)
+    Teacher.create(teacher)
         .then( data => {
             res.send(data)
         })
         .catch( err => {
             res.status(500).send({
-                message: err.message || "Error creating student"
+                message: err.message || "Error creating teacher"
             })
         })
+
 }
 
 exports.findAll = (req, res) => {
 
-    Student.findAll()
+    Teacher.findAll()
     .then(data => {
         if (data===null)
         {
@@ -136,20 +113,4 @@ exports.authenticate = (req, res) => {
             message: "Error retrieving student" + err.message
         })
     })
-}
-
-exports.update = (req, res) => {
-  
-}
-
-exports.delete = (req, res) => {
-  
-}
-
-exports.deleteAll = (req, res) => {
-  
-}
-
-exports.findAllPublished = (req, res) => {
-  
 }
