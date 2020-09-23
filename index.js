@@ -1,29 +1,27 @@
-import {db_connection} from "./Database/reset_models.js"
+// https://bezkoder.com/node-js-express-sequelize-mysql/
 
-import express from "express"
+const express = require("express")
 const app = express()
-app.use(express.json()) // Set Header "Content-Type" = "applications/json"
+const bodyParser = require("body-parser")
+app.use(bodyParser.json()) 
 
+// Set Header Content-Type = application/json (no quotes)
+
+const db = require("./models/index.js")
+db.sequelize.sync({force: false}).then(() => {
+    console.log("DB Synced")
+})
+
+// Test call
 let count = 1
-// console.log("Server Starting")
-
 app.get("/", function (req, res) {
-
-    // db_connection.find 
-    res.send('Display Table ' + count++)
+    res.send('API Call: ' + count++)
 })
 
-app.post("/", function (req, res) {
-    console.log(req.body)
+require("./routes/Student.routes")(app)
+require("./routes/Teacher.routes")(app);
 
-    if (req.body.action == "add")
-    {
-        for (let actor of req.body.actors)
-        {
-             // db_connection.create 
-        }
-    }
-    res.send('Post Request Successful! ' + count++);
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => {
+    console.log("Server running on port " + PORT)
 })
-
-app.listen(3000);
