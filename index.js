@@ -21,7 +21,8 @@ app.get("/", function (req, res) {
 })
 
 require("./routes/Student.routes")(app)
-require("./routes/Teacher.routes")(app);
+require("./routes/Teacher.routes")(app)
+require("./routes/Question.routes")(app);
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
