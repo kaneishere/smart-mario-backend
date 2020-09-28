@@ -1,30 +1,34 @@
-const dbConfig = require("../config/db.config.js")
-const Sequelize = require("sequelize")
+const dbConfig = require("../config/db.config.js");
+const Sequelize = require("sequelize");
 
 const sequelize = new Sequelize(dbConfig.db, dbConfig.user, dbConfig.password, {
-    host : dbConfig.host,
-    dialect: dbConfig.dialect,
+  host: dbConfig.host,
+  dialect: dbConfig.dialect,
 
-    pool : {
-        max: dbConfig.pool.max,
-        min: dbConfig.pool.min,
-        acquire: dbConfig.pool.acquire,
-        idle: dbConfig.pool.idle,
-    }
-})
+  pool: {
+    max: dbConfig.pool.max,
+    min: dbConfig.pool.min,
+    acquire: dbConfig.pool.acquire,
+    idle: dbConfig.pool.idle,
+  },
+});
 
-const db = {}
-db.Sequelize = Sequelize
-db.sequelize = sequelize
+const db = {};
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
 
-db.Student = require("./Student.models.js")(sequelize, Sequelize)
-db.Teacher = require("./Teacher.models.js")(sequelize, Sequelize)
-db.Challenge = require("./Challenge.models.js")(sequelize, Sequelize)
+db.Student = require("./Student.models.js")(sequelize, Sequelize);
+db.Teacher = require("./Teacher.models.js")(sequelize, Sequelize);
+db.Challenge = require("./Challenge.models.js")(sequelize, Sequelize);
 
-// User.belongsTo(Company, {foreignKey: 'fk_companyname', targetKey: 'name'}); // Adds fk_companyname to User
+// User.belongsTo(Company, {foreignKey: 'fk_companyname', targetKey: 'name'});
+// Adds fk_companyname to User
 
-db.Student.belongsTo(db.Teacher, {foreignKey: 'fk_teacher_key', sourceKey: 'teacher_key'})
-db.Student.belongsToMany(db.Challenge, { through: 'Student_Challenge' })
-db.Challenge.belongsToMany(db.Student, { through: 'Student_Challenge' })
+db.Student.belongsTo(db.Teacher, {
+  foreignKey: "fk_teacher_key",
+  sourceKey: "teacher_key",
+});
+db.Student.belongsToMany(db.Challenge, { through: "Student_Challenge" });
+db.Challenge.belongsToMany(db.Student, { through: "Student_Challenge" });
 
-module.exports = db
+module.exports = db;
