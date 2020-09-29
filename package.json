@@ -15,7 +15,8 @@
     "csvtojson": "^2.0.10",
     "express": "^4.17.1",
     "mysql2": "^2.2.1",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "sqlite3": "^5.0.0"
   },
   "devDependencies": {
     "eslint": "^7.9.0",
