@@ -1,12 +1,22 @@
 const { Student, Teacher, Op } = require("../models");
 
 function isUniqueUsername(username) {
-  return Student.count({ where: { username } }).then((count) => count !== 0);
+  return Student.count({ where: { username: username } }).then((count) => {
+    if (count !== 0) {
+      return false;
+    }
+    return true;
+  });
 }
 
 function has_teacher(fk_teacher_key) {
   return Teacher.count({ where: { teacher_key: fk_teacher_key } }).then(
-    (count) => count !== 0,
+    (count) => {
+      if (count != 0) {
+        return true;
+      }
+      return false;
+    },
   );
 }
 
@@ -31,6 +41,7 @@ exports.createStudent = async (req, res) => {
   }
 
   const unique = await isUniqueUsername(req.body.username);
+  console.log(unique);
   if (!unique) {
     res.status(400).send({
       message: "Error. Username Taken",
