@@ -21,6 +21,7 @@ function has_teacher(fk_teacher_key) {
 }
 
 exports.createStudent = async (req, res) => {
+  console.log(req.body);
   if (!req.body.username) {
     res.status(400).send({
       message: "Error. Username Empty",
